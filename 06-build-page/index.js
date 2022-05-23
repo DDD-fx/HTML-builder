@@ -20,13 +20,10 @@ const assetsDist = path.join(dist, 'assets');
 
   const components = await fsPromises.readdir(componentsSrc);
   for (let component of components) {
-    let componentName = component.slice(0, component.indexOf('.'));
-    let pattern = `{{${componentName}}}`;
-    let regexp = new RegExp(pattern, 'g');
+    let componentName = component.slice(0, component.lastIndexOf('.'));
     let componentPath = path.join(componentsSrc, `${component}`);
     let componentText = await fsPromises.readFile(componentPath, 'utf-8');
-
-    indexSrcData = indexSrcData.replace(regexp, componentText);
+    indexSrcData = indexSrcData.replace(`{{${componentName}}}`, componentText);
   }
   await fsPromises.writeFile(indexDist, indexSrcData);
   await console.log('index.html created');
