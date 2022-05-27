@@ -50,14 +50,12 @@ const assetsDist = path.join(dist, 'assets');
     const assetsSrcFiles = await fsPromises.readdir(assetsSrc, {withFileTypes: true});
 
     for (let item of assetsSrcFiles) {
+      let newAssetsSrc = path.join(assetsSrc, `${item.name}`);
+      let newDestSrc = path.join(assetsDist, `${item.name}`);
       if (item.isDirectory()) {
-        let newAssetsSrc = path.join(assetsSrc, `${item.name}`);
-        let newDestSrc = path.join(assetsDist, `${item.name}`);
         await copyDir(newAssetsSrc, newDestSrc);
       } else {
-        let srcFilePath = path.join(assetsSrc, `${item.name}`);
-        let destFilePath = path.join(assetsDist, `${item.name}`);
-        await fsPromises.copyFile(srcFilePath, destFilePath);
+        await fsPromises.copyFile(newAssetsSrc, newDestSrc);
       }
     }
   }
