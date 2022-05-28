@@ -7,7 +7,7 @@ const file = path.join(__dirname, 'notes.txt');
 /*-----change flag to 'a' to open file for appending------*/
 const stream = fs.createWriteStream(file, {flags: 'w'});
 
-stream.on('error', (err) => console.log(`Err: ${err}`));
+stream.on('error', (err) => console.error(err));
 process.on('exit', () => stdout.write('Process terminated. Have a nice day'));
 process.on('SIGINT', () => process.exit());
 
